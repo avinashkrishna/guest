@@ -1,0 +1,57 @@
+<span class="glyphicon glyphicon-refresh glyphicon-spin spinner" *ngIf="loading"></span>
+<div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li routerLinkActive="active">
+                    <a [routerLink]="['/welcome']">{{pageTitle}}</a>
+                </li>
+                <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">I Cook
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <a [routerLink]="['/products']">Menu Details</a>
+                </li>
+         <li routerLinkActive="active">
+                    <a [routerLink]="['/products', 0, 'edit']">Add Menu</a>
+                </li>
+        </ul>
+      </li>   
+      <li routerLinkActive="active">
+                    <a [routerLink]="['products/listOfItems']">I Eat</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li *ngIf="authService.isLoggedIn()">
+                    <a [routerLink]="['/login']">Welcome {{ authService.currentUser.userName }}</a>
+                </li>
+                 <li>
+                    <a (click)="sendToCart()" routerLinkActive="active" [routerLink]="['/cartList']">Cart ({{cartlength}})</a>
+                </li>
+                <li  *ngIf="!messageService.isDisplayed">
+                    <a (click)="displayMessages()">Show Messages</a>
+                </li>
+                <li *ngIf="messageService.isDisplayed">
+                    <a (click)="hideMessages()">Hide Messages</a>
+                </li>
+                <li *ngIf="!authService.isLoggedIn()">
+                    <a [routerLink]="['/login']">Log In</a>
+                </li>
+                <li *ngIf="authService.isLoggedIn()">
+                    <a (click)="logOut()">Log Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <router-outlet></router-outlet>
+            </div>
+            <div class="col-md-2">
+                <router-outlet name="popup"></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,127 @@
+
+ <div class="panel panel-primary row">
+    <div class="panel-heading">
+       Added to cart
+    </div>
+
+   
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-2">Filter by:</div>
+            <div class="col-md-4">
+                <input type="text" [(ngModel)]="listFilter" />
+            </div>
+        </div>
+        <div class="row" *ngIf="listFilter">
+            <div class="col-md-6">
+                <h3>Filtered by: {{listFilter}} </h3>
+            </div>
+        </div>
+
+        <div class="has-error" *ngIf="errorMessage">{{errorMessage}}</div>
+    </div>
+</div>
+
+<div class="panel panel-primary row">
+    <div class="panel-heading">
+        Total payment details
+    </div>
+
+   
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-2">Total Price</div>
+            <div class="col-md-4">
+                {{totalPrice}}
+            </div>
+            <div class="col-md-6">
+                <a class="btn btn-primary"
+            [routerLink]="['/products/paytm']">
+            Final Payment
+        </a>
+            </div>
+        </div>
+
+        <div class="has-error" *ngIf="errorMessage">{{errorMessage}}</div>
+    </div>
+</div>
+<div class="panel panel-primary" *ngFor="let product of cartObject; let i=index">
+    <div class="panel-heading" style="font-size:large">
+        {{pageTitle + ": " + product.productName}}
+    </div>
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-3">Name:</div>
+                    <div class="col-md-6">{{product.productName}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Quantity:</div>
+                    <div class="col-md-6">{{product.productCode  }}  
+                        <span  class="glyphicon glyphicon-plus" (click)="incrementQuantity(product.productCode,product)"></span>  
+                        <span  class="glyphicon glyphicon-minus" (click)="decrementQuantity(product.productCode,product)"></span></div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Description:</div>
+                    <div class="col-md-6">{{product.description}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Availability:</div>
+                    <div class="col-md-6">{{product.releaseDate}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Price:</div>
+                    <div class="col-md-6">{{product.price|currency:"INR":true}}</div>
+                </div>
+                <!--<div class="row">
+                    <div class="col-md-3">5 Star Rating:</div>
+                    <div class="col-md-6">
+                        <ai-star [rating]="product.starRating">
+                        </ai-star>
+                    </div>
+                </div>-->
+                <div class="row">
+                    <div class="col-md-3">Category:</div>
+                    <div class="col-md-6">{{product.category}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Tags:</div>
+                    <div class="col-md-6">{{product.tags}}</div>
+                </div>
+            </div>
+
+            <div class="col-md-6" *ngIf="product.imageUrl">
+                <img class="center-block img-responsive" 
+                     [style.width.px]="200" 
+                     [style.margin.px]="2" 
+                     [src]="product.imageUrl"
+                     [title]="product.productName">
+            </div>
+        </div>
+        <div class="has-error" *ngIf="errorMessage">{{errorMessage}}</div>
+    </div>
+
+    <div class="panel-footer">
+        <!--<a class="btn btn-default"
+           [routerLink]="['/products']"
+           [preserveQueryParams]="true">
+            <i class="glyphicon glyphicon-chevron-left"></i> Back
+        </a>-->
+        <!--<a class="btn btn-default"
+           [routerLink]="['/products']"
+           queryParamsHandling="preserve">
+            <i class="glyphicon glyphicon-chevron-left"></i> Back
+        </a>
+        <a class="btn btn-primary" style="width:80px;margin-left:10px" 
+           [routerLink]="['edit']">
+            Edit
+        </a>-->
+        <a class="btn btn-primary" style="width:80px;margin-left:10px" 
+           (click)="removeFromCart(i)" >
+            Remove
+        </a>
+    </div>
+</div>
